@@ -18,15 +18,21 @@ pip install -U "huggingface_hub"
 # pip --no-cache-dir install \
 #   "https://github.com/sergiycheck/comfyui-sage/releases/download/0.0.1/sageattention-${SAGE_ATTENTION_VERSION}+${CUDA_VERSION}${TORCH_VERSION}cc${COMPUTE_CAP}-${PYTHON_VERSION}-${PYTHON_VERSION}-linux_x86_64.whl"
 
+
+# To use SageAttention 2.2.0 (containing SageAttention2++), you can install using pip:
+
+pip install sageattention==2.2.0 --no-build-isolation
+
+# or
 # sageattention install from source
 
-cd ..
-git clone https://github.com/thu-ml/SageAttention.git
-cd SageAttention
-export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 # Optional
-python setup.py install
+# cd ..
+# git clone https://github.com/thu-ml/SageAttention.git
+# cd SageAttention
+# export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 # Optional
+# python setup.py install
 
-cd ./comfyui-infinitetalk
+# cd ./comfyui-infinitetalk
 
 # custom nodes
 cd custom_nodes
