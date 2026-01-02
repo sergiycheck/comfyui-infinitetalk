@@ -4,8 +4,19 @@
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 pip install -U "huggingface_hub"
+
 # sageattention install
 
+RUNPOD_VERSION=1.0.3
+CUDA_VERSION=cu1281
+TORCH_VERSION=torch280
+UBUNTU_VERSION=ubuntu2404
+SAGE_ATTENTION_VERSION=2.2.0
+COMPUTE_CAP=86
+PYTHON_VERSION=cp312
+
+pip --no-cache-dir install \
+  "https://github.com/sergiycheck/comfyui-sage/releases/download/0.0.1/sageattention-${SAGE_ATTENTION_VERSION}+${CUDA_VERSION}${TORCH_VERSION}cc${COMPUTE_CAP}-${PYTHON_VERSION}-${PYTHON_VERSION}-linux_x86_64.whl"
 
 # custom nodes
 cd custom_nodes
@@ -18,6 +29,7 @@ git clone https://github.com/kijai/ComfyUI-KJNodes.git
 git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git
 # installing dependencies for custom nodes
 for d in */; do [ -f "$d/requirements.txt" ] && pip install -r "$d/requirements.txt"; done
+cd ..
 
 
 # models
