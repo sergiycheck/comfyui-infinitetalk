@@ -18,6 +18,13 @@ PYTHON_VERSION=cp312
 pip --no-cache-dir install \
   "https://github.com/sergiycheck/comfyui-sage/releases/download/0.0.1/sageattention-${SAGE_ATTENTION_VERSION}+${CUDA_VERSION}${TORCH_VERSION}cc${COMPUTE_CAP}-${PYTHON_VERSION}-${PYTHON_VERSION}-linux_x86_64.whl"
 
+# sageattention install from source
+
+git clone https://github.com/thu-ml/SageAttention.git
+cd SageAttention
+export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 # Optional
+python setup.py install
+
 # custom nodes
 cd custom_nodes
 git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git
