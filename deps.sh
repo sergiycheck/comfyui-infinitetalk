@@ -6,24 +6,27 @@ pip install -r requirements.txt
 pip install -U "huggingface_hub"
 
 # sageattention install
+# not working with this version
+# RUNPOD_VERSION=1.0.3
+# CUDA_VERSION=cu1281
+# TORCH_VERSION=torch280
+# UBUNTU_VERSION=ubuntu2404
+# SAGE_ATTENTION_VERSION=2.2.0
+# COMPUTE_CAP=86
+# PYTHON_VERSION=cp312
 
-RUNPOD_VERSION=1.0.3
-CUDA_VERSION=cu1281
-TORCH_VERSION=torch280
-UBUNTU_VERSION=ubuntu2404
-SAGE_ATTENTION_VERSION=2.2.0
-COMPUTE_CAP=86
-PYTHON_VERSION=cp312
-
-pip --no-cache-dir install \
-  "https://github.com/sergiycheck/comfyui-sage/releases/download/0.0.1/sageattention-${SAGE_ATTENTION_VERSION}+${CUDA_VERSION}${TORCH_VERSION}cc${COMPUTE_CAP}-${PYTHON_VERSION}-${PYTHON_VERSION}-linux_x86_64.whl"
+# pip --no-cache-dir install \
+#   "https://github.com/sergiycheck/comfyui-sage/releases/download/0.0.1/sageattention-${SAGE_ATTENTION_VERSION}+${CUDA_VERSION}${TORCH_VERSION}cc${COMPUTE_CAP}-${PYTHON_VERSION}-${PYTHON_VERSION}-linux_x86_64.whl"
 
 # sageattention install from source
 
+cd ..
 git clone https://github.com/thu-ml/SageAttention.git
 cd SageAttention
 export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 # Optional
 python setup.py install
+
+cd ./comfyui-infinitetalk
 
 # custom nodes
 cd custom_nodes
