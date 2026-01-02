@@ -20,13 +20,15 @@ pip --no-cache-dir install \
 
 # custom nodes
 cd custom_nodes
-git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git
-git clone https://github.com/un-seen/comfyui-tensorops.git
+git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git
+git clone https://github.com/kijai/ComfyUI-KJNodes.git
+git clone https://github.com/Comfy-Org/ComfyUI-Manager.git
 git clone https://github.com/kijai/ComfyUI-MelBandRoFormer.git
 git clone https://github.com/kijai/ComfyUI-segment-anything-2.git
-git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
-git clone https://github.com/kijai/ComfyUI-KJNodes.git
-git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git
+git clone https://github.com/un-seen/comfyui-tensorops.git
+git clone https://github.com/pydn/ComfyUI-to-Python-Extension.git
+git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
+git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git
 # installing dependencies for custom nodes
 for d in */; do [ -f "$d/requirements.txt" ] && pip install -r "$d/requirements.txt"; done
 cd ..
