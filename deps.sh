@@ -4,8 +4,10 @@
 pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 pip install -U "huggingface_hub"
+# install sageattention
+pip install sageattention==2.2.0 --no-build-isolation
 
-# sageattention install
+# sageattention install from wheel
 # not working with this version
 # RUNPOD_VERSION=1.0.3
 # CUDA_VERSION=cu1281
@@ -18,15 +20,15 @@ pip install -U "huggingface_hub"
 # pip --no-cache-dir install \
 #   "https://github.com/sergiycheck/comfyui-sage/releases/download/0.0.1/sageattention-${SAGE_ATTENTION_VERSION}+${CUDA_VERSION}${TORCH_VERSION}cc${COMPUTE_CAP}-${PYTHON_VERSION}-${PYTHON_VERSION}-linux_x86_64.whl"
 
-# sageattention install from source
+# or sageattention install from source
 
-cd ..
-git clone https://github.com/thu-ml/SageAttention.git
-cd SageAttention
-export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 # Optional
-python setup.py install
+# cd ..
+# git clone https://github.com/thu-ml/SageAttention.git
+# cd SageAttention
+# export EXT_PARALLEL=4 NVCC_APPEND_FLAGS="--threads 8" MAX_JOBS=32 # Optional
+# python setup.py install
 
-cd ./comfyui-infinitetalk
+# cd ./comfyui-infinitetalk
 
 # custom nodes
 cd custom_nodes
@@ -42,7 +44,6 @@ git clone https://github.com/kijai/ComfyUI-WanVideoWrapper.git
 # installing dependencies for custom nodes
 for d in */; do [ -f "$d/requirements.txt" ] && pip install -r "$d/requirements.txt"; done
 cd ..
-
 
 # models
 hf download Kijai/WanVideo_comfy_fp8_scaled InfiniteTalk/Wan2_1-InfiniteTalk-Single_fp8_e4m3fn_scaled_KJ.safetensors --local-dir models/diffusion_models
