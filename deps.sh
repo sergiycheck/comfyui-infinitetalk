@@ -23,8 +23,6 @@ pip install sageattention==2.2.0 --no-build-isolation
 
 # To use SageAttention 2.2.0 (containing SageAttention2++), you can install using pip:
 
-pip install sageattention==2.2.0 --no-build-isolation
-
 # or
 # sageattention install from source
 
