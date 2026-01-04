@@ -4,6 +4,25 @@ import sys
 from typing import Sequence, Mapping, Any, Union
 import torch
 
+print("Importing ComfyUI reusable InfiniteTalk generation pipeline...")
+
+print("sys.path: before", sys.path)
+
+repo_root = os.path.dirname(os.path.abspath(__file__))
+
+print(f"repo_root: {repo_root}")
+
+# check if current os is windows
+# normalize sys.path path for Windows
+if os.name == "nt":
+    print("os.name", os.name)
+    sys_path = [os.path.normpath(p) for p in sys.path]
+    repo_root = os.path.normpath(repo_root)
+    if repo_root not in sys.path:
+        sys.path.insert(0, repo_root)
+
+print("sys.path: after", sys.path)
+
 
 def get_value_at_index(obj: Union[Sequence, Mapping], index: int) -> Any:
     """Returns the value at the given index of a sequence or mapping.
@@ -29,66 +48,6 @@ def get_value_at_index(obj: Union[Sequence, Mapping], index: int) -> Any:
         return obj["result"][index]
 
 
-def find_path(name: str, path: str = None) -> str:
-    """
-    Recursively looks at parent folders starting from the given path until it finds the given name.
-    Returns the path as a Path object if found, or None otherwise.
-    """
-    # If no path is given, use the current working directory
-    if path is None:
-        path = os.getcwd()
-
-    # Check if the current directory contains the name
-    if name in os.listdir(path):
-        path_name = os.path.join(path, name)
-        print(f"{name} found: {path_name}")
-        return path_name
-
-    # Get the parent directory
-    parent_directory = os.path.dirname(path)
-
-    # If the parent directory is the same as the current directory, we've reached the root and stop the search
-    if parent_directory == path:
-        return None
-
-    # Recursively call the function with the parent directory
-    return find_path(name, parent_directory)
-
-
-def add_comfyui_directory_to_sys_path() -> None:
-    """
-    Add 'ComfyUI' to the sys.path
-    """
-    comfyui_path = find_path("ComfyUI")
-    if comfyui_path is not None and os.path.isdir(comfyui_path):
-        sys.path.append(comfyui_path)
-        print(f"'{comfyui_path}' added to sys.path")
-
-
-def add_extra_model_paths() -> None:
-    """
-    Parse the optional extra_model_paths.yaml file and add the parsed paths to the sys.path.
-    """
-    try:
-        from main import load_extra_path_config
-    except ImportError:
-        print(
-            "Could not import load_extra_path_config from main.py. Looking in utils.extra_config instead."
-        )
-        from utils.extra_config import load_extra_path_config
-
-    extra_model_paths = find_path("extra_model_paths.yaml")
-
-    if extra_model_paths is not None:
-        load_extra_path_config(extra_model_paths)
-    else:
-        print("Could not find the extra_model_paths config file.")
-
-
-add_comfyui_directory_to_sys_path()
-add_extra_model_paths()
-
-
 def import_custom_nodes() -> None:
     """Find all custom nodes in the custom_nodes folder and add those node objects to NODE_CLASS_MAPPINGS
 
@@ -99,7 +58,6 @@ def import_custom_nodes() -> None:
     import execution
     from nodes import init_extra_nodes
 
-    sys.path.insert(0, find_path("ComfyUI"))
     import server
 
     # Creating a new event loop and setting it as the default loop
@@ -211,9 +169,7 @@ def infinitetalk_comfyui_generation_pipeline(
         intconstant_270 = intconstant.get_value(value=500)
 
         loadimage = NODE_CLASS_MAPPINGS["LoadImage"]()
-        loadimage_284 = loadimage.load_image(
-            image=local_image_name_input_folder
-        )
+        loadimage_284 = loadimage.load_image(image=local_image_name_input_folder)
 
         wav2vecmodelloader = NODE_CLASS_MAPPINGS["Wav2VecModelLoader"]()
         wav2vecmodelloader_300 = wav2vecmodelloader.loadmodel(
@@ -347,7 +303,7 @@ def infinitetalk_comfyui_generation_pipeline(
                 format="video/h264-mp4",
                 pix_fmt="yuv420p",
                 crf=19,
-                save_metadata=True,
+                save_metadata=False,
                 trim_to_audio=False,
                 pingpong=False,
                 save_output=True,
