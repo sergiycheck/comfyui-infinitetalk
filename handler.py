@@ -83,7 +83,7 @@ def infinite_talk_worker(image_s3_key: str, audio_s3_key: str, text_prompt: str)
         print("Job completed.", now_local_str())
         print("Generated video S3 URL:", s3_url)
 
-        return {"status": "completed", "s3_url": s3_url}
+        return {"status": "completed", "s3_url": s3_url, "s3_key": generated_video_name}
 
     except Exception as e:
         print(f"Error in infinite_talk_worker: {e}")

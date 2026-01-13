@@ -35,6 +35,7 @@ class VideoRequest(BaseModel):
     text_prompt: str
     image_s3_key: str
     audio_s3_key: str
+    chat_id: int
 
 
 app = FastAPI()
@@ -45,15 +46,16 @@ def infinite_talk_worker_wrapper(
 ):
     try:
         print("Starting generation", now_local_str())
-        queue.put({"status": "starting generation"})
+        queue.put({"status": "started"})
 
         result = infinite_talk_worker(
             image_s3_key=request["image_s3_key"],
             audio_s3_key=request["audio_s3_key"],
             text_prompt=request["text_prompt"],
         )
+        result_full = {**result, "chat_id": request["chat_id"]}
 
-        queue.put(result)
+        queue.put(result_full)
 
     except Exception as e:
         queue.put({"status": "error", "error": str(e)})
