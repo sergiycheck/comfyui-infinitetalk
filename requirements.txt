@@ -27,3 +27,22 @@ kornia>=0.7.1
 spandrel
 pydantic~=2.0
 pydantic-settings~=2.0
+
+# Hugging Face
+huggingface_hub
+
+# FastAPI stack
+fastapi[standard]
+uvicorn
+
+# AWS
+boto3
+
+# Data validation
+pydantic
+
+# Environment variables
+python-dotenv
+
+# WebSocket support
+websockets
